@@ -17,11 +17,11 @@ export const updateData_MaryJane = {
 
 // --> POST /remove-user
 export const removeStudent = {
-    stdnum: "12345678" // e.g of student does not exist
+    stdnum: "123456789" // e.g of student does not exist
 };
 
 export const removeStudent_existing = {
-    stdnum: "1002" // e.g of student that exists
+    stdnum: "202312438" // e.g of student that exists
 };
   
 // --> POST /remove-all-user

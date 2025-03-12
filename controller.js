@@ -20,19 +20,19 @@ await mongoose.connect("mongodb://127.0.0.1:27017/StudentDatabase", {
 // --------  SAVING DATA-------- //
 // Save a Single Student
 const saveStudent = async (req, res) => {
-    console.log("New Student Data:", req.body);
+    res.json("New Student Data:", req.body);
     try {
         if (!req.body.stdnum || !req.body.fname || !req.body.lname || !req.body.age) {
-            return console.log({ inserted: false, error: "Error: Incomplete student data" }); // error msg if not complete student data
+            return res.json({ inserted: false, error: "Error: Incomplete student data" }); // error msg if not complete student data
           }
 
         const student = new Student(req.body);
         await student.save(); // save to database
 
-        console.log({ inserted: true }); // Successfully inserted in Database 
+        res.json({ inserted: true }); // Successfully inserted in Database 
 
   } catch (error) {
-    console.log({ inserted: false, error: error.message });
+    res.json({ inserted: false, error: error.message });
   }
 };
 
@@ -40,9 +40,9 @@ const saveStudent = async (req, res) => {
 const saveManyStudents = async (req, res) => {
   try {
     await Student.insertMany(studentsData);
-    console.log({ inserted: true });
+    res.json({ inserted: true });
   } catch (error) {
-    console.log({ inserted: false, error: error.message });
+    res.json({ inserted: false, error: error.message });
   }
 };
 
@@ -53,18 +53,18 @@ const updateStudent = async (req, res) => {
       const { fname, newLname } = req.body; 
   
       if (!fname || !newLname) {
-        return console.log({ updated: false, error: "Missing required data informations." });
+        return res.json({ updated: false, error: "Missing required data informations." });
       }
   
       const result = await Student.updateOne({ fname: fname }, { lname: newLname }); // update to database
       
       if (result.modifiedCount > 0) {
-        console.log({ updated: true });
+        res.json({ updated: true });
       } else {
-        console.log({ updated: false, error: "Student not found." }); 
+        res.json({ updated: false, error: "Student not found." }); 
       }
     } catch (error) {
-      console.log({ updated: false, error: error.message });
+      res.json({ updated: false, error: error.message });
     }
 };
 
@@ -75,18 +75,18 @@ const removeUser = async (req, res) => {
     const { stdnum } = req.body; 
 
     if (!stdnum) {
-      return console.log({ deleted: false, error: "Student number is required." });
+      return res.json({ deleted: false, error: "Student number is required." });
     }
 
     const result = await Student.deleteOne({ stdnum: stdnum }); // delete in database 
 
     if (result.deletedCount > 0) {
-      console.log({ deleted: true });
+      res.json({ deleted: true });
     } else {
-      console.log({ deleted: false, error: "Student not found." }); // error removing if student is not found
+      res.json({ deleted: false, error: "Student not found." }); // error removing if student is not found
     }
   } catch (error) {
-    console.log({ deleted: false, error: error.message });
+    res.json({ deleted: false, error: error.message });
   }
 };
 
@@ -95,12 +95,12 @@ const removeAllUsers = async (req, res) => {
     const result = await Student.deleteMany({}); // Delete all students
 
     if (result.deletedCount > 0) {
-      console.log({ deleted: true });
+      res.json({ deleted: true });
     } else {
-      console.log({ deleted: false, error: "No students found." }); // error removing if no student is found
+      res.json({ deleted: false, error: "No students found." }); // error removing if no student is found
     }
   } catch (error) {
-    console.log({ deleted: false, error: error.message });
+    res.json({ deleted: false, error: error.message });
   }
 };
 
@@ -113,9 +113,9 @@ const getUser = async (req, res) => {
     const student = await Student.find({ stdnum: stdnum }); // find in database
 
     if (student.length > 0) {
-      console.log(student);
+      res.send(student);
     } else {
-      console.log([]); // Return empty array if student not found
+      res.send([]); // Return empty array if student not found
     }
   } catch (error) {
     console.log({ error: error.message });
@@ -126,7 +126,7 @@ const getUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const students = await Student.find({});
-    console.log(students.length > 0 ? students : []); // Return all students or empty array
+    res.send(students.length > 0 ? students : []); // Return all students or empty array
   } catch (error) {
     console.log({ error: error.message });
   }
