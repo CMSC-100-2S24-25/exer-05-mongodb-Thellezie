@@ -1,1 +1,13 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/PGZ3017l)
+Project Title : EXERCISE 6 -  User Management using Express, Mongoose, Needle, and MongoDB compass
+Author : Luthelle L. Fernandez
+Code Description : 
+    - 
+How to use :
+    1. Download all modules required. See package.json for versions used.
+        - Express  
+        - Mongoose  
+        - Needle  
+    2. Make sure you have downloaded MongoDB with MongoDB compass
+        - If not here are the links :
+            - Installing MongoDB in Ubuntu : https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
+            - Installing MongoDB Compass in Ubuntu : https://www.mongodb.com/docs/compass/current/install/
