@@ -14,7 +14,7 @@ References :
 // Import Statements
 import needle from 'needle';
 import readline from 'readline';
-import {studentsData, updateData_MaryJane, removeStudent, removeStudent_existing} from './data.js';
+import {studentsData, studentSingle, updateData_MaryJane, removeStudent, removeStudent_existing} from './data.js';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -40,9 +40,16 @@ const handleAction = (choice) => {
     case "1": // Add Students
       console.log("\nAdding Student Data ..");
 
-      needle.post('http://localhost:3000/save-multiple-students', studentsData, { json: true }, (err, res) => {
-        if (err) console.error(err);
-        console.log("Response:", res.body);
+      // !! Uncomment to test -> insertMany
+      // needle.post('http://localhost:3000/save-multiple-students', studentsData, { json: true }, (err, res) => {
+      //   if (err) console.error(err);
+      //   console.log("Response:", res.body);
+      // });
+
+      // !! Uncomment to test -> single Insert
+      needle.post('http://localhost:3000/save-student', studentSingle, { json: true }, (err, res) => {
+        if (err) console.error("Error:", err);
+        else console.log("Response:", res.body);
       });
 
       break;
@@ -60,12 +67,12 @@ const handleAction = (choice) => {
     case "3": // Remove Specific User
       console.log("Deleting One User .. \n");
       
-      //  !! Uncomment to test -> Non-existing student to remove
+      //  !! Uncomment to test -> Non-existing student to remove // To delete : stdnum : 202312438
       // needle.post('http://localhost:3000/remove-user', removeStudent, { json: true }, (err, res) => {
       //   console.log("Remove User Response:", res.body);
       // });
 
-      // !! Uncomment to test -> Existing student to remove
+      // !! Uncomment to test -> Existing student to remove // To delete : stdnum : 202312438
       needle.post('http://localhost:3000/remove-user', removeStudent_existing, { json: true }, (err, res) => {
         console.log("Remove User Response:", res.body);
       });
@@ -85,21 +92,21 @@ const handleAction = (choice) => {
       console.log("Getting User .. \n");
 
       // !! Uncomment to test -> Existing user to get - Mary Jane
-      // needle.get('http://localhost:3000/user?stdnum=202310001', (err, res) => {
-      //   if (err) console.error("Error:", err);
-      //   console.log("Get a User:", res.body);
-      // });
+      needle.get('http://localhost:3000/user?stdnum=202310001', (err, res) => {
+        if (err) console.error("Error:", err);
+        console.log("Get a User:", res.body);
+      });
       
       // !! Uncomment to test -> Not Existing user to get
-      needle.get('http://localhost:3000/user?stdnum=8051495845', (err, res) => {
-        if (err) console.error("Error fetching user:", err);
-        console.log("Get User Response:", res.body);
-      });
+      // needle.get('http://localhost:3000/user?stdnum=8051495845', (err, res) => {
+      //   if (err) console.error("Error fetching user:", err);
+      //   console.log("Get User Response:", res.body);
+      // });
 
       break;
       
 
-    case "6": 
+    case "6": // Get ALL users/students in the database
       console.log("Getting ALL Users .. \n");
 
       needle.get('http://localhost:3000/members', (err, res) => {

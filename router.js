@@ -26,4 +26,5 @@ const router = (app) => {
   app.get('/members', getAllUsers); 
 };
 
+// export statement
 export default router;

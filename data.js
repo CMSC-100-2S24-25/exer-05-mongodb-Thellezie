@@ -1,5 +1,13 @@
 // ====== THIS FILE CONTAINS ALL THE CONSTANT DATA NEEDED FOR THE FUNCTIONS REQUIRED IN EXERCISE ========== //
 
+// For single add of student
+export const studentSingle = {
+    stdnum: "202312438",
+    fname: "Luthelle",
+    lname: "Fernandez",
+    age: 20
+};
+
 // --> POST /save-student
 export const studentsData = [
     { stdnum: "202310001", fname: "Mary Jane", lname: "Watson", age: 20 },

@@ -20,9 +20,12 @@ await mongoose.connect("mongodb://127.0.0.1:27017/StudentDatabase", {
 // --------  SAVING DATA-------- //
 // Save a Single Student
 const saveStudent = async (req, res) => {
-    res.json("New Student Data:", req.body);
+    console.log("New Student Data:", req.body);
+    
     try {
-        if (!req.body.stdnum || !req.body.fname || !req.body.lname || !req.body.age) {
+      const { stdnum, fname, lname, age } = req.body;
+
+        if (!stdnum || !fname || !lname || !age) {
             return res.json({ inserted: false, error: "Error: Incomplete student data" }); // error msg if not complete student data
           }
 
@@ -61,7 +64,7 @@ const updateStudent = async (req, res) => {
       if (result.modifiedCount > 0) {
         res.json({ updated: true });
       } else {
-        res.json({ updated: false, error: "Student not found." }); 
+        res.json({ updated: false, error: "Student not found or No Changes" }); 
       }
     } catch (error) {
       res.json({ updated: false, error: error.message });
@@ -132,5 +135,5 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-  
+// export statement
 export { saveStudent, saveManyStudents, updateStudent, removeUser, removeAllUsers, getUser, getAllUsers};
